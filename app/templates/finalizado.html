@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto">
+  <div class="flex mb-4">
+    <div class="w-1/2 h-12 flex">
+      <span class="text-3xl font-bold self-center">
+        {% if title %}
+          {{ title }}
+        {% else %}
+          Finalizar
+        {% endif %}
+      </span>
+    </div>
+  </div>
+
+  <div class="w-full rounded bg-white">
+    <div class="px-4 flex flex-col">
+      <table cellpadding="5">
+        <thead>
+          <tr>
+            <th>Ingredientes</th>
+            <th>Preço</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+        {% for ingrediente in lanche.ingredientes %}
+          <tr class="border border-b border-grey-light">
+            <td>{{ ingrediente.nome }}</td>
+            <td>R$ <input id="total" type="text" disabled style="width: 30px; text-align: center" class="py-2" value="{{ ingrediente.preco }}"></td>
+          </tr>
+        {% endfor %}
+        <tr class="border border-b border-grey-light bg-green-lightest">
+          <td>Desconto:</td>
+          <td>R$ <input id="total" type="text" disabled style="width: 30px; text-align: center" class="bg-green py-2 text-white" value="0"></td>
+        </tr>
+        <tr class="border border-b border-grey-light">
+          <td>Total:</td>
+          <td>
+            R$ <input id="total" type="text" disabled style="width: 30px; text-align: center" class="py-2" value="{{ preco }}">
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-right px-4">
+      <button id="finalizar" class="bg-transparent border border-green rounded
+                    hover:bg-green-dark hover:text-white hover:border-transparent
+                    text-green-dark font-semibold py-2 px-4 my-2">
+        Ok
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  document.querySelector('#finalizar').addEventListener('click', () => {
+    window.location.assign('/index');
+  });
+</script>
+{% endblock %}
