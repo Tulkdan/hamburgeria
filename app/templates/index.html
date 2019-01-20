@@ -2,7 +2,19 @@
 
 {% block content %}
 <div class="container mx-auto">
-  <h1>{{ title }}</h1>
+  <div class="flex mb-4">
+    <div class="w-1/2 h-12 flex">
+      <span class="text-3xl font-bold self-center">{{ title }}</span>
+    </div>
+    <div class="w-1/2 h-12 text-right">
+      <a href="/montar" class="bg-transparent border border-teal rounded
+                    hover:bg-teal hover:text-white hover:border-transparent
+                    text-teal-dark font-semibold py-2 px-4 my-2 mx-4">
+        Montar lanche
+      </a>
+    </div>
+      
+  </div>
 
   <div class="flex sm:flex-row mb-6 sm:mb-0">
     {% for lanche in lanches %}
@@ -25,11 +37,6 @@
     {% endfor %}
   </div>
 
-
-  <div class="bg-blue-lightest border-t border-b border-blue text-blue-dark px-4 py-3 mt-4" role="alert">
-    <p class="font-bold">Preço do lanche escolhido:</p>
-    <p id="preco"></p>
-  </div>
 </div>
 
 {% endblock %}
