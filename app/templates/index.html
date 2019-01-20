@@ -6,7 +6,7 @@
 
   <div class="flex sm:flex-row mb-6 sm:mb-0">
     {% for lanche in lanches %}
-      <div class="w-1/4 sm:flex-1 lg:flex-initial lg:w-1/4 rounded bg-white my-4 mx-2 flex flex-col bg-indigo text-white">
+      <div class="w-1/4 sm:flex-1 lg:flex-initial lg:w-1/4 rounded my-4 mx-2 flex flex-col bg-indigo text-white">
         <div class="p-8 text-3xl font-bold text-center">{{ lanche.nome }}</div>
         <div class="border-0 border-grey-light border-t border-solid text-sm">
           {% for ingrediente in lanche.ingredientes %}
@@ -16,10 +16,10 @@
           {% endfor %}
         </div>
         <div class="text-center mt-8 mb-8 mt-auto pt-2">
-          <button data-codigo="{{ lanche.id }}"
-              class="bg-white hover:bg-grey-darker hover:text-white font-bold py-2 px-4 rounded">
+          <a href="/lanche/{{ lanche.id }}"
+            class="bg-white hover:bg-grey-darker hover:text-white font-bold py-2 px-4 rounded">
               Selecionar
-          </button> 
+          </a>
         </div>
       </div>
     {% endfor %}
@@ -31,19 +31,5 @@
     <p id="preco"></p>
   </div>
 </div>
-
-  <script>
-    document.querySelectorAll('button').forEach( el => {
-      el.addEventListener('click', (e) => {
-        const codigo = el.dataset.codigo;
-        fetch(`/${codigo}`, {
-          method: 'POST',
-        }).then( (req) => req.json() )
-        .then( (data) => 
-          document.querySelector('#preco').innerText = `${data.lanche.nome} - R$ ${data.preco}`
-        );
-      });
-    });
-  </script>
 
 {% endblock %}
