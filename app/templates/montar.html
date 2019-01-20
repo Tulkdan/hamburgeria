@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto">
+
+  <div class="flex mb-4">
+    <div class="w-1/2 h-12 flex">
+      <span class="text-3xl font-bold self-center">{{ title }}</span>
+    </div>
+    <div class="w-1/2 h-12 text-right">
+      <a href="/index" class="bg-transparent border border-red rounded
+                    hover:bg-red hover:text-white hover:border-transparent
+                    text-red-dark font-semibold py-2 px-4 my-2 mx-4">
+        Voltar
+      </a>
+      <button id="finalizar" class="bg-transparent border border-blue rounded
+                    hover:bg-blue hover:text-white hover:border-transparent
+                    text-blue-dark font-semibold py-2 px-4 my-2">
+        Finalizar pedido
+      </button>
+    </div>
+      
+  </div>
+  
+
+  <div class="flex sm:flex-row mb-6 sm:mb-0">
+    <div class="w-full rounded bg-whtie">
+      <div class="px-4 flex flex-col">
+        <table cellpadding="5">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+          {% for ingrediente in ingredientes %}
+            <tr class="border border-b border-grey-light">
+              <td>{{ ingrediente.nome }}</td>
+              <td>R${{ ingrediente.preco }}</td>
+              <td>
+                <button class="minus bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente.id }}" data-preco="{{ ingrediente.preco }}">-</button>
+                <input id="qtd-{{ ingrediente.id }}" type="text" disabled style="width: 50px; text-align: center" class="py-2" value="0">
+                <button class="add bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente.id }}" data-preco="{{ ingrediente.preco }}">+</button>
+              </td>
+            </tr>
+          {% endfor %}
+          <tr class="border border-b border-grey-light">
+            <td></td>
+            <td>Total:</td>
+            <td>
+              <input id="total" type="text" disabled style="width: 50px; text-align: center" class="py-2" value="0">
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const ingredientes_extra = [];
+
+  document.querySelectorAll('.minus').forEach( el => {
+    el.addEventListener('click', () => {
+      let total = Number(document.querySelector('#total').value);
+      const codigo = el.dataset.codigo;
+      let valor = Number(document.querySelector(`#qtd-${codigo}`).value);
+      if (valor > 0) {
+        const preco = Number(el.dataset.preco);
+        document.querySelector(`#qtd-${codigo}`).value = valor - 1;
+        document.querySelector('#total').value = (total - preco < 0) ? 0.00 : (Math.round((total - preco) * 100) / 100).toFixed(2) ;
+        const idx = ingredientes_extra.indexOf(codigo);
+        ingredientes_extra.splice(idx, 1);
+      }
+    });
+  });
+
+  document.querySelectorAll('.add').forEach( el => {
+    el.addEventListener('click', () => {
+      let total = Number(document.querySelector('#total').value);
+      const codigo = el.dataset.codigo;
+      const preco = Number(el.dataset.preco);
+      let valor = Number(document.querySelector(`#qtd-${codigo}`).value);
+      valor += 1;
+      document.querySelector(`#qtd-${codigo}`).value = valor;
+      document.querySelector('#total').value = (Math.round((total + preco) * 100) / 100).toFixed(2);
+      ingredientes_extra.push(codigo);
+    });
+  });
+
+  document.querySelector('#finalizar').addEventListener('click', (e) => {
+    fetch('', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(ingredientes_extra)
+    }).then( req => {
+      if (req.ok) {
+        window.location.href = req.url;
+      }
+    });
+  });
+</script>
+{% endblock %}
