@@ -88,7 +88,7 @@
       if (valor > 0) {
         const preco = Number(el.dataset.preco);
         document.querySelector(`#qtd-${codigo}`).value = valor - 1;
-        document.querySelector('#total').value = total - preco;
+        document.querySelector('#total').value = (total - preco < 0) ? 0.00 : (Math.round((total - prec0) * 100) / 100).toFixed(2);
         const idx = ingredientes_extra.indexOf(codigo);
         ingredientes_extra.splice(idx, 1);
       }
@@ -103,7 +103,7 @@
       if (valor > 1) {
         const preco = Number(el.dataset.preco);
         document.querySelector(`#qtd-${codigo}`).value = valor - 1;
-        document.querySelector('#total').value = total - preco;
+        document.querySelector('#total').value = (total - preco < 0) ? 0.00 : (Math.round((total - preco) * 100) / 100).toFixed(2);
         const idx = ingredientes_extra.indexOf(codigo);
         ingredientes_extra.splice(idx, 1);
       }
@@ -118,7 +118,7 @@
       let valor = Number(document.querySelector(`#qtd-${codigo}`).value);
       valor += 1;
       document.querySelector(`#qtd-${codigo}`).value = valor;
-      document.querySelector('#total').value = total + preco;
+      document.querySelector('#total').value = (Math.round((total + preco) * 100) / 100).toFixed(2);
       ingredientes_extra.push(codigo);
     });
   });
