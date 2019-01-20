@@ -38,6 +38,11 @@ def finalizar():
   preco = request.args['preco']
   json_acceptable = lanche.replace("'", "\"")
   lanche = json.loads(json_acceptable)
-  pp.pprint(json.loads(json_acceptable))
   return render_template('finalizado.html', title=lanche['nome'],
           lanche=lanche, preco=preco)
+
+@app.route('/montar', methods=['GET', 'POST'])
+def montar():
+  if request.method == 'GET':
+    ingredientes = functions.get_all_ingredientes()
+    return render_template('montar.html', title='Montar lanche', ingredientes=ingredientes)
