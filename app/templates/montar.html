@@ -62,7 +62,7 @@
 </div>
 
 <script>
-  const ingredientes_extra = [];
+  const ingredientes= [];
 
   document.querySelectorAll('.minus').forEach( el => {
     el.addEventListener('click', () => {
@@ -73,8 +73,8 @@
         const preco = Number(el.dataset.preco);
         document.querySelector(`#qtd-${codigo}`).value = valor - 1;
         document.querySelector('#total').value = (total - preco < 0) ? 0.00 : (Math.round((total - preco) * 100) / 100).toFixed(2) ;
-        const idx = ingredientes_extra.indexOf(codigo);
-        ingredientes_extra.splice(idx, 1);
+        const idx = ingredientes.indexOf(codigo);
+        ingredientes.splice(idx, 1);
       }
     });
   });
@@ -88,7 +88,7 @@
       valor += 1;
       document.querySelector(`#qtd-${codigo}`).value = valor;
       document.querySelector('#total').value = (Math.round((total + preco) * 100) / 100).toFixed(2);
-      ingredientes_extra.push(codigo);
+      ingredientes.push(codigo);
     });
   });
 
@@ -98,7 +98,7 @@
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(ingredientes_extra)
+      body: JSON.stringify(ingredientes)
     }).then( req => {
       if (req.ok) {
         window.location.href = req.url;
