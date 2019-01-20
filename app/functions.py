@@ -12,6 +12,16 @@ def calcula_preco(lanche):
   
   return preco
 
+def get_ingredientes_lanche(lanche):
+  aux = []
+  with open('mocks/mock-ingredientes.json', 'r') as f:
+    ingredientes = json.load(f)
+    for ingrediente in ingredientes:
+      for ing in lanche['ingredientes']:
+        if ingrediente['id'] == ing:
+          aux.append(ingrediente)
+  lanche['ingredientes'] = aux
+  return lanche
 
 def filtra_lanche(id):
   with open('mocks/mock-lanches.json', 'r') as f:
@@ -39,4 +49,9 @@ def get_all_together():
     aux['ingredientes'] = auxI
     data.append(aux)
 
+  return data
+
+def get_all_ingredientes():
+  with open('mocks/mock-ingredientes.json', 'r') as f:
+    data = json.load(f)
   return data
