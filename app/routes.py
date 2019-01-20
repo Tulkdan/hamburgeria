@@ -1,4 +1,4 @@
-from flask import render_template, jsonify, request
+from flask import render_template, jsonify, request, redirect, url_for
 from app import app, functions
 import json
 import pprint as pp
@@ -24,11 +24,20 @@ def lanche(codigo):
         lanche['ingredientes'].append(int(extra))
     preco = functions.calcula_preco(lanche)
     lanche = functions.get_ingredientes_lanche(lanche)
-    return jsonify({ "lanche": lanche, "preco": preco })
-
+    return redirect(url_for('finalizar', lanche=lanche, preco=preco))
 
 @app.route('/<codigo>', methods=['GET'])
 def ingrediente(codigo):
   lanche = functions.filtra_lanche(int(codigo))
   preco = functions.calcula_preco(lanche)
   return jsonify({ "lanche": lanche, "preco": preco })
+
+@app.route('/finalizar', methods=['GET'])
+def finalizar():
+  lanche = request.args.get('lanche')
+  preco = request.args['preco']
+  json_acceptable = lanche.replace("'", "\"")
+  lanche = json.loads(json_acceptable)
+  pp.pprint(json.loads(json_acceptable))
+  return render_template('finalizado.html', title=lanche['nome'],
+          lanche=lanche, preco=preco)

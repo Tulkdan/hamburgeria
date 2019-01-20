@@ -130,8 +130,11 @@
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(ingredientes_extra)
-    }).then( req => req.json())
-    .then( data => console.log(data));
+    }).then( req => {
+      if (req.ok) {
+        window.location.href = req.url;
+      }
+    });
   });
 </script>
 {% endblock %}
