@@ -1,3 +1,4 @@
+from app.models import Ingrediente, Lanche
 import json
 import pprint as pp
 
@@ -6,7 +7,7 @@ def calcula_preco(lanche):
   with open('mocks/mock-ingredientes.json', 'r') as f:
     ingredientes = json.load(f)
     for ingrediente in ingredientes:
-      for ing in lanche['ingredientes']:
+      for ing in lanche.ingredientes:
         if ingrediente['id'] == ing:
           preco += ingrediente['preco']
   
@@ -17,10 +18,10 @@ def get_ingredientes_lanche(lanche):
   with open('mocks/mock-ingredientes.json', 'r') as f:
     ingredientes = json.load(f)
     for ingrediente in ingredientes:
-      for ing in lanche['ingredientes']:
+      for ing in lanche.ingredientes:
         if ingrediente['id'] == ing:
-          aux.append(ingrediente)
-  lanche['ingredientes'] = aux
+          aux.append(Ingrediente(ingrediente['id'], ingrediente['nome'], ingrediente['preco']))
+  lanche.ingredientes = aux
   return lanche
 
 def filtra_lanche(id):
@@ -28,7 +29,9 @@ def filtra_lanche(id):
     lanches = json.load(f)
     for lanche in lanches:
       if lanche['id'] == id:
-        return lanche
+        aux = Lanche(lanche['nome'], lanche['ingredientes'])
+        aux._id = lanche['id']
+        return aux
 
   return None
 
@@ -41,17 +44,22 @@ def get_all_together():
 
   for lanche in lanches:
     auxI = []
-    aux = lanche
+    aux = Lanche(lanche['nome'], lanche['ingredientes'])
+    aux._id = lanche['id']
     for ingrediente in ingredientes:
       for ing in lanche['ingredientes']:
         if ingrediente['id'] == ing:
-          auxI.append(ingrediente)
-    aux['ingredientes'] = auxI
+          auxI.append(Ingrediente(ingrediente['id'], ingrediente['nome'], ingrediente['preco']))
+    aux.ingredientes = auxI
     data.append(aux)
 
   return data
 
 def get_all_ingredientes():
+  datas = []
   with open('mocks/mock-ingredientes.json', 'r') as f:
     data = json.load(f)
-  return data
+    for ingrediente in data:
+      aux = Ingrediente(ingrediente['id'], ingrediente['nome'], ingrediente['preco'])
+      datas.append(aux)
+  return datas

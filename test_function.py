@@ -1,5 +1,6 @@
 import unittest
 from app.functions import *
+from app.models import Ingrediente, Lanche
 
 class Testes(unittest.TestCase):
   def test_calcula_preco(self):
@@ -7,7 +8,9 @@ class Testes(unittest.TestCase):
     self.assertEqual(calcula_preco(lanche), 4.50)
 
   def test_filtro_lanche(self):
-    self.assertEqual(filtra_lanche(1)['nome'], 'X-Burguer')
+    aux = Lanche('', [])
+    aux._id = 1
+    self.assertEqual(filtra_lanche(1)._id, aux._id)
 
   def test_get_all(self):
     self.assertEqual(len(get_all_together()), 4)
@@ -17,6 +20,6 @@ class Testes(unittest.TestCase):
 
   def test_get_ingredientes(self):
     lanche = filtra_lanche(1)
-    self.assertEqual(len(get_ingredientes_lanche(lanche)['ingredientes']), 2)
+    self.assertEqual(len(get_ingredientes_lanche(lanche).ingredientes), 2)
   
 unittest.main()
