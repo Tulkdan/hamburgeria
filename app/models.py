@@ -1,5 +1,3 @@
-from flask import jsonify
-
 class Ingrediente():
   def __init__(self, _id, nome, preco):
     self._id = _id
@@ -28,6 +26,9 @@ class Lanche():
 
   def setId(self, codigo):
     self._id = codigo
+
+  def add_ingrediente(self, ingrediente):
+    self.ingredientes.append(ingrediente)
 
   def toJSON(self):
     ingredientes = []
