@@ -40,9 +40,9 @@
               <td>{{ ingrediente.nome }}</td>
               <td>R${{ ingrediente.preco }}</td>
               <td>
-                <button class="minus bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente.id }}" data-preco="{{ ingrediente.preco }}">-</button>
-                <input id="qtd-{{ ingrediente.id }}" type="text" disabled style="width: 50px; text-align: center" class="py-2" value="0">
-                <button class="add bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente.id }}" data-preco="{{ ingrediente.preco }}">+</button>
+                <button class="minus bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente._id }}" data-preco="{{ ingrediente.preco }}">-</button>
+                <input id="qtd-{{ ingrediente._id }}" type="text" disabled style="width: 50px; text-align: center" class="py-2" value="0">
+                <button class="add bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente._id }}" data-preco="{{ ingrediente.preco }}">+</button>
               </td>
             </tr>
           {% endfor %}
