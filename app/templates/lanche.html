@@ -51,14 +51,9 @@
               <td>{{ ingrediente.nome }}</td>
               <td>R${{ ingrediente.preco }}</td>
               <td>
-                {% if ingrediente in lanche.ingredientes %}
-                  <button class="minusHas bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente.id }}" data-preco="{{ ingrediente.preco }}">-</button>
-                  <input id="qtd-{{ ingrediente.id }}" type="text" disabled style="width: 30px; text-align: center" class="py-2" value="1">
-                {% else %}
-                  <button class="minus bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente.id }}" data-preco="{{ ingrediente.preco }}">-</button>
-                  <input id="qtd-{{ ingrediente.id }}" type="text" disabled style="width: 30px; text-align: center" class="py-2" value="0">
-                {% endif %}
-                <button class="add bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente.id }}" data-preco="{{ ingrediente.preco }}">+</button>
+                <button class="minus bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente._id }}" data-preco="{{ ingrediente.preco }}">-</button>
+                <input id="qtd-{{ ingrediente._id }}" type="text" disabled style="width: 30px; text-align: center" class="py-2" value="0">
+                <button class="add bg-blue text-white py-2 px-4" data-codigo="{{ ingrediente._id }}" data-preco="{{ ingrediente.preco }}">+</button>
               </td>
             </tr>
           {% endfor %}
@@ -89,21 +84,6 @@
         const preco = Number(el.dataset.preco);
         document.querySelector(`#qtd-${codigo}`).value = valor - 1;
         document.querySelector('#total').value = (total - preco < 0) ? 0.00 : (Math.round((total - prec0) * 100) / 100).toFixed(2);
-        const idx = ingredientes_extra.indexOf(codigo);
-        ingredientes_extra.splice(idx, 1);
-      }
-    });
-  });
-
-  document.querySelectorAll('.minusHas').forEach( el => {
-    el.addEventListener('click', () => {
-      let total = Number(document.querySelector('#total').value);
-      const codigo = el.dataset.codigo;
-      let valor = Number(document.querySelector(`#qtd-${codigo}`).value);
-      if (valor > 1) {
-        const preco = Number(el.dataset.preco);
-        document.querySelector(`#qtd-${codigo}`).value = valor - 1;
-        document.querySelector('#total').value = (total - preco < 0) ? 0.00 : (Math.round((total - preco) * 100) / 100).toFixed(2);
         const idx = ingredientes_extra.indexOf(codigo);
         ingredientes_extra.splice(idx, 1);
       }
