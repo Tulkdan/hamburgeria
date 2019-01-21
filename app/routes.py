@@ -12,8 +12,8 @@ def index():
 def lanche(codigo):
   lanche = functions.filtra_lanche(int(codigo))
   if request.method == 'GET':
-    preco = functions.calcula_preco(lanche)
     lanche = functions.get_ingredientes_lanche(lanche)
+    preco = functions.calcula_preco(lanche)
     return render_template('lanche.html', title='Lanche escolhido', 
             lanche=lanche, ingredientes=functions.get_all_ingredientes(),
             preco=preco)
@@ -22,8 +22,8 @@ def lanche(codigo):
     if len(data) > 0:
       for extra in data:
         lanche.ingredientes.append(int(extra))
-    preco = functions.calcula_preco(lanche)
     lanche = functions.get_ingredientes_lanche(lanche)
+    preco = functions.calcula_preco(lanche)
     session['lanche'] = lanche.toJSON()
     session['preco'] = preco
     return redirect(url_for('finalizar'))
@@ -38,11 +38,21 @@ def ingrediente(codigo):
 
 @app.route('/finalizar', methods=['GET'])
 def finalizar():
-  lanche = session.get('lanche', None)
+  aux = session.get('lanche', None)
   preco = session.get('preco', None)
-  lanche = models.Lanche(lanche['nome'], lanche['ingredientes'])
+  lanche = models.Lanche(aux['nome'], [])
+  for ingrediente in aux['ingredientes']:
+    lanche.add_ingrediente(models.Ingrediente(ingrediente['id'], ingrediente['nome'], ingrediente['preco']))
+  promos = functions.Promos()
+  desconto = 0
+  desconto += promos.light(lanche, preco)
+  desconto += promos.too_much(lanche, 'Hambúrguer de carne')
+  desconto += promos.too_much(lanche, 'Queijo')
+  desconto = round(desconto, 2)
+  if desconto > 0:
+    preco = preco - desconto
   return render_template('finalizado.html', title=lanche.nome,
-          lanche=lanche, preco=preco)
+          lanche=lanche, preco=preco, desconto=desconto)
 
 @app.route('/montar', methods=['GET', 'POST'])
 def montar():
@@ -53,8 +63,8 @@ def montar():
     data = request.get_json()
     ingredientes = list(map(lambda x: int(x), data))
     lanche = models.Lanche('', ingredientes)
-    preco = functions.calcula_preco(lanche)
     lanche = functions.get_ingredientes_lanche(lanche)
+    preco = functions.calcula_preco(lanche)
     session['lanche'] = lanche.toJSON()
     session['preco'] = preco
     return redirect(url_for('finalizar'))
