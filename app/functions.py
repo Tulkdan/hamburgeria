@@ -4,13 +4,9 @@ import pprint as pp
 
 def calcula_preco(lanche):
   preco = 0
-  with open('mocks/mock-ingredientes.json', 'r') as f:
-    ingredientes = json.load(f)
-    for ingrediente in ingredientes:
-      for ing in lanche.ingredientes:
-        if ingrediente['id'] == ing:
-          preco += ingrediente['preco']
-  
+  for ing in lanche.ingredientes:
+    preco += ing.preco
+
   return preco
 
 def get_ingredientes_lanche(lanche):
@@ -74,11 +70,11 @@ def get_ingrediente(nome):
 
 
 class Promos():
-  def light(self, lanche):
+  def light(self, lanche, preco):
     lanche = lanche.toJSON()
     alface = get_ingrediente('Alface').toJSON()
     bacon = get_ingrediente('Bacon').toJSON()
     if alface in lanche['ingredientes'] and bacon not in lanche['ingredientes']:
-      return True
+      return preco * 0.1
     else:
-      return False
+      return preco

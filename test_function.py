@@ -5,7 +5,9 @@ from app.models import Ingrediente, Lanche
 class Testes(unittest.TestCase):
   def test_calcula_preco(self):
     lanche = filtra_lanche(1)
-    self.assertEqual(calcula_preco(lanche), 4.50)
+    lanche = get_ingredientes_lanche(lanche)
+    lanche.add_ingrediente(get_ingrediente('Alface'))
+    self.assertEqual(calcula_preco(lanche), 4.90)
 
   def test_filtro_lanche(self):
     aux = Lanche('', [])
@@ -28,9 +30,10 @@ class Testes(unittest.TestCase):
 class TestePromos(unittest.TestCase):
   def test_light(self):
     lanche = Lanche('Teste', [])
-    lanche.ingredientes.append(get_ingrediente('Alface'))
-    lanche.ingredientes.append(get_ingrediente('Queijo'))
-    self.assertEqual(Promos().light(lanche), True)
+    lanche.add_ingrediente(get_ingrediente('Alface'))
+    lanche.add_ingrediente(get_ingrediente('Queijo'))
+    preco = calcula_preco(lanche)
+    self.assertEqual(Promos().light(lanche, preco), 0.19)
 
 if __name__ == '__main__':
   unittest.main(verbosity=2)
