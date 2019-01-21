@@ -77,7 +77,7 @@ class Promos():
     if alface in lanche['ingredientes'] and bacon not in lanche['ingredientes']:
       return preco * 0.1
     else:
-      return preco
+      return 0
 
   def too_much(self, lanche, nome):
     count = 0
