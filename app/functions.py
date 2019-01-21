@@ -63,3 +63,22 @@ def get_all_ingredientes():
       aux = Ingrediente(ingrediente['id'], ingrediente['nome'], ingrediente['preco'])
       datas.append(aux)
   return datas
+
+def get_ingrediente(nome):
+  with open('mocks/mock-ingredientes.json', 'r') as f:
+    ingredientes = json.load(f)
+    for ingrediente in ingredientes:
+      if ingrediente['nome'] == nome:
+        return Ingrediente(ingrediente['id'], ingrediente['nome'], ingrediente['preco'])
+  return None
+
+
+class Promos():
+  def light(self, lanche):
+    lanche = lanche.toJSON()
+    alface = get_ingrediente('Alface').toJSON()
+    bacon = get_ingrediente('Bacon').toJSON()
+    if alface in lanche['ingredientes'] and bacon not in lanche['ingredientes']:
+      return True
+    else:
+      return False
