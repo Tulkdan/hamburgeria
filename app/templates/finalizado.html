@@ -27,17 +27,17 @@
         {% for ingrediente in lanche.ingredientes %}
           <tr class="border border-b border-grey-light">
             <td>{{ ingrediente.nome }}</td>
-            <td>R$ <input id="total" type="text" disabled style="width: 30px; text-align: center" class="py-2" value="{{ ingrediente.preco }}"></td>
+            <td>R$ <input id="total" type="text" disabled style="width: 80px; text-align: center" class="py-2" value="{{ ingrediente.preco }}"></td>
           </tr>
         {% endfor %}
         <tr class="border border-b border-grey-light bg-green-lightest">
           <td>Desconto:</td>
-          <td>R$ <input id="total" type="text" disabled style="width: 30px; text-align: center" class="bg-green py-2 text-white" value="0"></td>
+          <td>R$ <input id="total" type="text" disabled style="width: 80px; text-align: center" class="bg-green py-2 text-white" value="{{ desconto }}"></td>
         </tr>
         <tr class="border border-b border-grey-light">
           <td>Total:</td>
           <td>
-            R$ <input id="total" type="text" disabled style="width: 30px; text-align: center" class="py-2" value="{{ preco }}">
+            R$ <input id="total" type="text" disabled style="width: 80px; text-align: center" class="py-2" value="{{ preco }}">
           </td>
         </tr>
         </tbody>
