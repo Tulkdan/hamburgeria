@@ -35,5 +35,30 @@ class TestePromos(unittest.TestCase):
     preco = calcula_preco(lanche)
     self.assertEqual(Promos().light(lanche, preco), 0.19)
 
+  def test_too_much_3_items(self):
+    lanche = Lanche('', [])
+    lanche.add_ingrediente(get_ingrediente('Hambúrguer de carne'))
+    lanche.add_ingrediente(get_ingrediente('Hambúrguer de carne'))
+    lanche.add_ingrediente(get_ingrediente('Hambúrguer de carne'))
+    lanche.add_ingrediente(get_ingrediente('Hambúrguer de carne'))
+    self.assertEqual(Promos().too_much(lanche, 'Hambúrguer de carne'), 3)
+
+  def test_too_much_6_items(self):
+    lanche = Lanche('', [])
+    lanche.add_ingrediente(get_ingrediente('Queijo'))
+    lanche.add_ingrediente(get_ingrediente('Queijo'))
+    lanche.add_ingrediente(get_ingrediente('Queijo'))
+    lanche.add_ingrediente(get_ingrediente('Queijo'))
+    lanche.add_ingrediente(get_ingrediente('Queijo'))
+    lanche.add_ingrediente(get_ingrediente('Queijo'))
+    self.assertEqual(Promos().too_much(lanche, 'Queijo'), 3)
+
+  def test_too_much_2_items(self):
+    lanche = Lanche('', [])
+    lanche.add_ingrediente(get_ingrediente('Hambúrguer de carne'))
+    lanche.add_ingrediente(get_ingrediente('Hambúrguer de carne'))
+    self.assertEqual(Promos().too_much(lanche, 'Hambúrguer de carne'), 0)
+
+
 if __name__ == '__main__':
   unittest.main(verbosity=2)

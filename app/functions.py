@@ -78,3 +78,15 @@ class Promos():
       return preco * 0.1
     else:
       return preco
+
+  def too_much(self, lanche, nome):
+    count = 0
+    ing = get_ingrediente(nome)
+    for ingrediente in lanche.ingredientes:
+      if ingrediente.nome == nome:
+        count += 1
+    if count // 3 > 0:
+      div = count // 3
+      return ing.preco * div
+    else:
+      return 0
