@@ -58,3 +58,9 @@ def montar():
     session['lanche'] = lanche.toJSON()
     session['preco'] = preco
     return redirect(url_for('finalizar'))
+
+@app.route('/logout', methods=['GET'])
+def logout():
+  for key in session.keys():
+    session.pop(key)
+    return redirect(url_for('index'))

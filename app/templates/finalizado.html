@@ -45,20 +45,14 @@
     </div>
 
     <div class="text-right px-4">
-      <button id="finalizar" class="bg-transparent border border-green rounded
+      <a href="/logout" class="bg-transparent border border-green rounded
                     hover:bg-green-dark hover:text-white hover:border-transparent
                     text-green-dark font-semibold py-2 px-4 my-2">
         Ok
-      </button>
+    </a>
     </div>
 
   </div>
 
 </div>
-
-<script>
-  document.querySelector('#finalizar').addEventListener('click', () => {
-    window.location.assign('/index');
-  });
-</script>
 {% endblock %}
