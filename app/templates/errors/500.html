@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto text-center">
+  <div class="flex mb-4">
+    <div class="w-full h-12">
+      <h1>Um erro inexperado aconteceu</h1>
+    </div>
+  </div>
+  <div class="flex mb-4 pt-4">
+    <div class="w-full h-12">
+      <a href="{{ url_for('index') }}" class="bg-teal hover:bg-teal-dark text-white font-bold py-2 px-10 rounded">
+        Voltar
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
