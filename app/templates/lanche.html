@@ -8,10 +8,12 @@
       <span class="text-3xl font-bold self-center">{{ title }}</span>
     </div>
     <div class="w-1/2 h-12 text-right">
-      <a href="/index" class="bg-transparent border border-red rounded
+      <a href="{{ url_for('index') }}">
+        <button class="bg-transparent border border-red rounded
                     hover:bg-red hover:text-white hover:border-transparent
                     text-red-dark font-semibold py-2 px-4 my-2 mx-4">
-        Voltar
+          Voltar
+        </button>
       </a>
       <button id="finalizar" class="bg-transparent border border-blue rounded
                     hover:bg-blue hover:text-white hover:border-transparent
