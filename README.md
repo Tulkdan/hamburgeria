@@ -1,31 +1,71 @@
 # Hamburgueria
 
-## Getting Started
+Instruções para copiar o projeto e executar em sua máquina local para desenvolvimento ou para testes.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+## Pré-requisitos
 
-### Prerequisites
+Você precisa de python 3 (a versão utilizada foi a 3.6.7) instalada em seu sistema e pip ou pip3 para instalar as extenções.
 
-You need python 3 (the version I used was 3.6.7) installed in your system and pip or pip3.
+### Instalação
 
-After that, you can simply do
-`pip install -r requirements.txt`
-to install all the dependencies for you.
+Após isso, crie um novo ambiente python para instalar as extensões com:
 
-### Installing
+```
+python3 -m venv env`
+```
 
-After everything is installed you can activate your environment with `source /path/to/env/activate`,
-and set up the flask app with `export FLASK_APP=restaurante.py`.
+Depois que for criado o ambiente, você deverá ativá-lo com:
 
-> if you want run it in development mode just export the env with `export FLASK_ENV=development` before running it
+```
+source /<path>/<para>/<env>/activate
+```
 
-Now you can run the app with `flask run`
+Após o ambiente estar ativo, você pode simplesmente executar o comando
 
-## Built With
+```
+pip install -r requirements.txt
+```
 
-* [Flask](http://flask.pocoo.org/) - The python framework used
-* [Tailwind](https://tailwindcss.com/) - The CSS framework used
+para instalar todas as dependências necessárias
 
-## Authors
+Após a instalação das dependências deve setar a aplicação para o flask com
 
-* **Pedro Correa** - [Tulkdan](https://github.com/Tulkdan)
+```
+export FLASK_APP=restaurante.py
+```
+
+
+>Caso queira executar no modo de desenvolvimento deve-se setar o flask para rodar com o comando
+>```
+>export FLASK_ENV=development
+>```
+>antes de executá-lo
+
+Agora está tudo setado para rodar a aplicação em sua máquina local com:
+
+```
+flask run
+```
+
+## Rodando os testes
+
+Deve-se estar na raiz do projeto, com isso apenas rode o arquivo `test_function.py` com:
+
+```
+python3 test_function.py
+```
+
+Ele te derá um output de todos os testes e os status finais.
+
+## Construído com
+
+* [Flask](http://flask.pocoo.org/) - O python framework utilizado
+
+* [Tailwind](https://tailwindcss.com/) - O CSS framework utilizado
+
+## Design de código
+
+Foi-se utilizado o design de código **Orientado a Objeto**
+por ser um dos mais utilizados e mais simples de se trabalhar, pois pode-se apenas fazer uma instância do objeto e trabalhar com as informações contidas neste objeto.
+
+Assim, conforme algo é mudado, mudamos os dados da instância do objeto que esteja na memória.
